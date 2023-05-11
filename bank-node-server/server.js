@@ -21,6 +21,9 @@ app.use("/api/accounts", require("./api/account/account.routes"));
 // Route for transaction
 app.use("/api/transactions", require("./api/transaction/transaction.routes"));
 
+// Route for user
+app.use("/api/users", require("./api/user/user.routes"));
+
 
 // default route
 app.get("/", (req, res) => {

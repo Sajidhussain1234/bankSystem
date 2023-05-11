@@ -9,6 +9,6 @@ const connectToMongoDB = () => {
   mongoose
     .connect(mongoURI)
     .then(() => console.log("Connected to MongoDB"))
-    .catch((error) => console.error("Failed to connect to MongoDB", error));
+    .catch((error) => console.error("Failed to connect with MongoDB", error));
 };
 module.exports = connectToMongoDB;

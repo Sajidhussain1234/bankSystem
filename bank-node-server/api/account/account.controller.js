@@ -39,6 +39,7 @@ const makeDeposit = async (req, res) => {
       res.status(404).json({ error: "Account not found" });
     } else {
       account.balance += parseInt(amount)
+      await account.save();
       res.json({ message: "Deposit successful", balance: account.balance });
     }
   } catch (error) {
@@ -58,6 +59,7 @@ const makeWithdrawal = async (req, res) => {
       res.status(400).json({ error: "Insufficient balance" });
     } else {
       account.balance -= amount;
+      await account.save();
       res.json({ message: "Withdrawal successful", balance: account.balance });
     }
   } catch (error) {
