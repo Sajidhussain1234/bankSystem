@@ -66,28 +66,42 @@ const makeWithdrawal = async (req, res) => {
     res.status(500).send(error);
   }
 };
-
-// Get account transaction history
-const getTransactionHistory = (req, res) => {
-  const { accountNumber } = req.params;
+// Get all accounts
+const getAllAccounts = async (req, res) => {
   try {
-    const account = Account.find((a) => a.accountNumber === accountNumber);
-    if (!account) {
+    const accounts = await Account.find();
+    if (!accounts) {
       res.status(404).json({ error: "Account not found" });
     } else {
-      // Assume we have a transaction history array for each account
-      const history = account.history || [];
-      res.json(history);
+      res.json(accounts)
     }
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
+// // Get account transaction history
+// const getTransactionHistory = (req, res) => {
+//   const { accountNumber } = req.params;
+//   try {
+//     const account = Account.find((a) => a.accountNumber === accountNumber);
+//     if (!account) {
+//       res.status(404).json({ error: "Account not found" });
+//     } else {
+//       // Assume we have a transaction history array for each account
+//       const history = account.history || [];
+//       res.json(history);
+//     }
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// };
+
 module.exports = {
   createAccount,
   getAccountBalance,
   makeDeposit,
   makeWithdrawal,
-  getTransactionHistory,
+  getAllAccounts,
+  // getTransactionHistory,
 };

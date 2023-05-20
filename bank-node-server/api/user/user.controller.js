@@ -15,11 +15,13 @@ const getUser = async (req, res) => {
 
 // POST request to create a new user
 const createUser = async (req, res) => {
-  const { firstName, lastName, mobileNumber } = req.body;
+  const { firstName, lastName,email, mobileNumber,password } = req.body;
   const user = new User({
     firstName,
     lastName,
-    mobileNumber
+    email,
+    mobileNumber,
+    password
   });
 
   try {
@@ -32,7 +34,7 @@ const createUser = async (req, res) => {
 
 // PUT request to update an existing user's information
 const updateUser = async (req, res) => {
-  const { firstName, lastName, mobileNumber } = req.body;
+  const { firstName, lastName,email, mobileNumber,password } = req.body;
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -40,7 +42,9 @@ const updateUser = async (req, res) => {
     }
     user.firstName = firstName;
     user.lastName = lastName;
+    user.email = email;
     user.mobileNumber = mobileNumber;
+    user.password = password;
     const updatedUser = await user.save();
     res.status(200).json(updatedUser);
   } catch (err) {

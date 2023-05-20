@@ -15,7 +15,10 @@ router.post('/deposit/:accountNumber', controller.makeDeposit);
 // Make a withdrawal
 router.post('/withdraw/:accountNumber', controller.makeWithdrawal);
 
-// Get account transaction history
-router.get('/history/:accountNumber', controller.getTransactionHistory);
+// Get all accounts
+router.get('/', controller.getAllAccounts);
+
+// // Get account transaction history
+// router.get('/history/:accountNumber', controller.getTransactionHistory);
 
 module.exports = router;

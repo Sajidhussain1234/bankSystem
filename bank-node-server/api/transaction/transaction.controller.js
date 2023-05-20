@@ -85,8 +85,26 @@ const getTransactionsByAccountNumber = async (req, res) => {
   }
 };
 
+// Get all transactions
+const getAllTransactions = async (req, res) => {
+  try {
+    const transactions = await Transaction.find();
+    if (!transactions.length) {
+      return res.status(404).json({ message: "Transaction not found." });
+    }
+    
+    res.json(transactions);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching the transactions." });
+  }
+};
+
 module.exports = {
   createTransaction,
   getTransactionById,
   getTransactionsByAccountNumber,
+  getAllTransactions
 };

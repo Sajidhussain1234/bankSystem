@@ -11,12 +11,7 @@ const schema = new mongoose.Schema(
       type: Number,
       required: true,
       default: 0
-    },
-    // history: [{
-    //   type: String,
-    //   enum: ['deposit', 'withdrawal'],
-    //   required: true,
-    // }],
+    }
   },
   { timestamps: true }
 );
