@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+.gitignore
+/bank-node-server/.gitignore
+/bank-reactjs-context/.gitignore
 /bank-node-server/node_modules
 /bank-reactjs-context/node_modules
 /.pnp
