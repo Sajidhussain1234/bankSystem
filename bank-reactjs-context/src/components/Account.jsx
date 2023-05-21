@@ -12,8 +12,8 @@ const Account = () => {
 
     const getAllAccounts = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/accounts/');
-            // console.log(res.data);
+            const res = await axios.get('http://localhost:3002/api/accounts/');
+            console.log(res.data);
             const data = await res.data;
             // console.log("call1:", data)
             setAccounts(data);

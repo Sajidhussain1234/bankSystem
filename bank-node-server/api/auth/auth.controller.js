@@ -40,9 +40,7 @@ const signup = async (req, res) => {
     // getting id of user and adding json web token with that id and sent as reponse
     const payload = {
       id: user._id
-      // user: {
-      //   id: user._id,
-      // },
+       // user: { id: user._id},
     };
     const authToken = jwt.sign(payload, JWT_SECRET);
     res.json({ message: "Congrats! Account created successfully", authToken });

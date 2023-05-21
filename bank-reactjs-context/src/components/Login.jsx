@@ -16,9 +16,7 @@ const Login = () => {
         e.preventDefault();
         try {
             setIsLoading(true);
-            console.log(user)
             const response = await axios.post('http://localhost:3002/api/auth/login', user);
-            console.log('first')
             const authToken = response.data.authToken;
             setIsLoading(false);
             alert('Successfully login')

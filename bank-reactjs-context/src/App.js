@@ -10,11 +10,12 @@ import Signup from "./components/Signup";
 import About from "./components/About";
 import AuthState from "./context/AuthState";
 
+
 function App() {
   return (
     <>
-      <AuthState>
-        <Router>
+      <Router>
+        <AuthState>
           <Navbar />
           <Routes>
             <Route exact path="/" element={<Home key="home" />} />
@@ -29,8 +30,8 @@ function App() {
             <Route exact path="/login" element={<Login key="login" />} />
             <Route exact path="/signup" element={<Signup key="signup" />} />
           </Routes>
-        </Router>
-      </AuthState>
+        </AuthState>
+      </Router>
     </>
   );
 }

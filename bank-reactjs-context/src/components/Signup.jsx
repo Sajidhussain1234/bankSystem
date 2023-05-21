@@ -2,15 +2,18 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 import AuthContext from '../context/authContext';
 
+let confirmPassword; 
+
 const Signup = () => {
 
     const [newUser, setNewUser] = useState({});
+    const [confirmPassword, setConfirmPassword] = useState(); 
 
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const ctx = useContext(AuthContext); 
-    const {authTokenStore} = ctx;
+    const ctx = useContext(AuthContext);
+    const { authTokenStore } = ctx;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,7 +23,7 @@ const Signup = () => {
             const authToken = response.data.authToken;
             setIsLoading(false);
             alert('Account created successfully')
-            authTokenStore(authToken); 
+            authTokenStore(authToken);
         } catch (error) {
             setIsLoading(false)
             setIsError(true)
@@ -31,6 +34,17 @@ const Signup = () => {
     const handleChange = (e) => {
         setNewUser({ ...newUser, [e.target.name]: e.target.value });
     };
+
+    const handleConfirmPassword = (e) => {
+        return newUser === confirmPassword
+        // if (newUser.password === e.target.value) {
+        //     console.log("Password match!")
+        // }
+        // else {
+        //     console.log("Password does not match!")
+        // }
+
+    }
 
 
     if (isLoading) return (<div className="text-center mt-4">
@@ -61,9 +75,9 @@ const Signup = () => {
                     <div>
                         <input type="password" className="form-control my-3" id="password" name="password" placeholder='Password' onChange={handleChange} />
                     </div>
-                    {/* <div>
-                        <input type="password" className="form-control my-3" id="confirmPassword" name="confirmPassword" placeholder='Confirm Password' onChange={handleChange} />
-                    </div> */}
+                    <div>
+                        <input type="password" className={`form-control my-3 ` } id="confirmPassword" name="confirmPassword" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
+                    </div>
                     <div>
                         <button type="submit" className="btn btn-primary my-2 w-100">Signup</button>
                     </div>
@@ -75,6 +89,9 @@ const Signup = () => {
 }
 
 export default Signup;
+
+// ${(newUser.password === confirmPassword) ? '' : 'is-invalid'}
+// ${handleConfirmPassword() ? '' : 'is-invalid'}
 
 
 
