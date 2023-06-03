@@ -9,16 +9,14 @@ router.post('/', controller.createAccount);
 // Get account balance
 router.get('/balance/:accountNumber', controller.getAccountBalance);
 
-// Make a deposit
-router.post('/deposit/:accountNumber', controller.makeDeposit);
-
-// Make a withdrawal
-router.post('/withdraw/:accountNumber', controller.makeWithdrawal);
-
 // Get all accounts
 router.get('/', controller.getAllAccounts);
 
-// // Get account transaction history
-// router.get('/history/:accountNumber', controller.getTransactionHistory);
+// Get a single account by id
+router.get('/:id', controller.getSingleAccount);
+
+// Get a single account by id
+router.get('/user/:id', controller.getAccountByUserId);
+
 
 module.exports = router;

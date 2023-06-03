@@ -8,8 +8,8 @@ router.post("/", controller.createTransaction);
 //Route:02 /Get specific transaction through /transaction/:Id 
 router.get("/:id", controller.getTransactionById);
 
-//Route:03 /GET all transactions of a single account number through /transactions/account/:accountNumber
-router.get("/accountNumber/:accountNumber", controller.getTransactionsByAccountNumber); 
+//Route:03 /GET all transactions of a single account number through /transactions/account/:acount id
+router.get("/account/:id", controller.getTransactionByAccountId); 
 // /accountNumber/:accountNumber  intensionally add accountNumber with api endpoint to differnitiate from above id api endpoint
 
 //Route:04 /GET all transactions

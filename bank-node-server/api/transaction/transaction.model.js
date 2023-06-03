@@ -16,6 +16,10 @@ const Schema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  currentBalance: {
+    type: Number,
+    required: true
+  },
   date: {
     type: Date,
     default: Date.now

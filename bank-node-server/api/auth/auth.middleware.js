@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const fetchuser = async (req, res, next) => {
-  console.log("middleware called");
   const token = req.header('atoken');
 
   if (!token) {

@@ -15,3 +15,5 @@ router.get('/getuser', fetchuser, controller.getUser);
 
 
 module.exports = router;
+
+

@@ -41,6 +41,9 @@ const schema = new mongoose.Schema(
         }
       },
     },
+    image: {
+      type: String
+    },
     // roles: [
     //   {
     //     type: mongoose.Schema.Types.ObjectId,

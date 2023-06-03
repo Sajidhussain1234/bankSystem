@@ -3,7 +3,7 @@ const Account = require("../account/account.model");
 
 const createTransaction = async (req, res) => {
   console.log(req.body);
-  const { account, transactionType, amount } = req.body;
+  const { account, amount, transactionType } = req.body;
   try {
     const acnt = await Account.findOne({ _id: account });
     if (!acnt) {
@@ -14,16 +14,18 @@ const createTransaction = async (req, res) => {
       } else {
         acnt.balance -= parseInt(amount);
         await acnt.save();
+        console.log(acnt)
         // res.json({ message: "Withdrawal successful", balance: acnt.balance });
         const transaction = new Transaction({
           account,
           transactionType,
           amount,
+          currentBalance: acnt.balance
         });
         await transaction.save();
         res
           .status(201)
-          .json({ message: "Transaction created successfully.", transaction,  TransactionType: "Withdrawal ", remainingBalance: acnt.balance });
+          .json({ message: "Transaction created successfully.", transaction,  TransactionType: "Withdrawal ", currentBalance: acnt.balance });
       }
     } else {
       acnt.balance += parseInt(amount);
@@ -33,27 +35,27 @@ const createTransaction = async (req, res) => {
         account,
         transactionType,
         amount,
+        currentBalance:acnt.balance
       });
       await transaction.save();
       res
         .status(201)
-        .json({ message: "Transaction created successfully.", transaction, TransactionType: "deposit ", currentBalance: acnt.balance });
+        .json({ message: "Transaction created successfully.", transaction});
     }
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({ message: "An error occurred while creating the transaction." });
+      .json({ message: "An error occurred while creating the transaction."});
   }
 };
 
 const getTransactionById = async (req, res) => {
-  const Id = req.params.id;
-
+  const id = req.params.id;
+  console.log(id)
   try {
     // const transaction = await Transaction.findById(transactionId).populate('accountNumber');
-    const transaction = await Transaction.findById(Id);
-    console.log("id")
+    const transaction = await Transaction.findById(id);
     if (!transaction) {
       return res.status(404).json({ message: "Transaction not found." });
     }
@@ -66,12 +68,12 @@ const getTransactionById = async (req, res) => {
   }
 };
 
-const getTransactionsByAccountNumber = async (req, res) => {
-  const accountNumber = req.params.accountNumber;
-  console.log(accountNumber);
+const getTransactionByAccountId = async (req, res) => {
+  const account = req.params.id;
+  console.log(account);
 
   try {
-    const transactions = await Transaction.find({ account: accountNumber });
+    const transactions = await Transaction.find({ account });
     if (!transactions.length) {
       return res.status(404).json({ message: "Transaction not found." });
     }
@@ -105,6 +107,6 @@ const getAllTransactions = async (req, res) => {
 module.exports = {
   createTransaction,
   getTransactionById,
-  getTransactionsByAccountNumber,
+  getTransactionByAccountId,
   getAllTransactions
 };

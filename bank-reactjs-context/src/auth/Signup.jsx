@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import AuthContext from '../context/authContext';
+import { AuthContext } from "../context/auth"
 
-let confirmPassword; 
 
 const Signup = () => {
 
-    const [newUser, setNewUser] = useState({});
+    const [newUser, setNewUser] = useState({});    
     const [confirmPassword, setConfirmPassword] = useState(); 
-
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const ctx = useContext(AuthContext);
-    const { authTokenStore } = ctx;
+    const context = useContext(AuthContext);
+    const { authTokenStore } = context;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,7 +41,6 @@ const Signup = () => {
         // else {
         //     console.log("Password does not match!")
         // }
-
     }
 
 
@@ -76,7 +73,7 @@ const Signup = () => {
                         <input type="password" className="form-control my-3" id="password" name="password" placeholder='Password' onChange={handleChange} />
                     </div>
                     <div>
-                        <input type="password" className={`form-control my-3 ` } id="confirmPassword" name="confirmPassword" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <input type="password" className={`form-control my-3 ${newUser.password === confirmPassword ? '' : 'is-invalid'}` } id="confirmPassword"  name="confirmPassword" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
                     </div>
                     <div>
                         <button type="submit" className="btn btn-primary my-2 w-100">Signup</button>
@@ -90,8 +87,7 @@ const Signup = () => {
 
 export default Signup;
 
-// ${(newUser.password === confirmPassword) ? '' : 'is-invalid'}
-// ${handleConfirmPassword() ? '' : 'is-invalid'}
+
 
 
 

@@ -2,16 +2,21 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     accountNumber: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     balance: {
       type: Number,
       required: true,
-      default: 0
-    }
+      default: 0,
+    },
   },
   { timestamps: true }
 );

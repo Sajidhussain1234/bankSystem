@@ -35,7 +35,7 @@ const signup = async (req, res) => {
       password: encryptedPassword,
     });
     await user.save();
-    console.log(user._id);
+    // console.log(user._id);
 
     // getting id of user and adding json web token with that id and sent as reponse
     const payload = {
@@ -103,10 +103,9 @@ const login = async (req, res) => {
 //   };
 
 const getUser = async (req, res) => {
-  console.log("Main controller");
   try {
     const userId = req.userId;
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId).select("-password"); // "-password" it mean without password all fields
     console.log(user);   
     res.status(200).json({ message: "User retrieved successfully", user });
   } catch (error) {

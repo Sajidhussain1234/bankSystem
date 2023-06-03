@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import AuthContext from '../context/authContext';
+import { AuthContext } from "../context/auth" 
+import { AlertContext } from "../context/alert" 
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -9,8 +11,10 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const ctx = useContext(AuthContext); 
-    const {authTokenStore} = ctx;
+    const context = useContext(AuthContext); 
+    const alertContext = useContext(AlertContext); 
+    const {authTokenStore} = context;
+    const {showAlert} = alertContext;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +23,7 @@ const Login = () => {
             const response = await axios.post('http://localhost:3002/api/auth/login', user);
             const authToken = response.data.authToken;
             setIsLoading(false);
-            alert('Successfully login')
+            showAlert('Successfully logged in')
             authTokenStore(authToken); 
         } catch (error) {
             setIsLoading(false)
@@ -57,7 +61,8 @@ const Login = () => {
                         {/* <h6 className='text-center'> OR </h6> */}
                         <div>
                             {/* <button type="submit" className="btn btn-primary my-2 w-100">Signup</button> */}
-                            <p className=' font-weight-bold text-center text-decoration-underline'>Create Account</p>
+                           <Link  to = "/signup"><p className=' font-weight-bold text-center text-decoration-underline'>Create New Account</p>
+                           </Link>
                         </div>
                     </form>
                 </div>
