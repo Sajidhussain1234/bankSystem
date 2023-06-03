@@ -31,17 +31,7 @@ const Signup = () => {
 
     const handleChange = (e) => {
         setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    };
-
-    const handleConfirmPassword = (e) => {
-        return newUser === confirmPassword
-        // if (newUser.password === e.target.value) {
-        //     console.log("Password match!")
-        // }
-        // else {
-        //     console.log("Password does not match!")
-        // }
-    }
+    };  
 
 
     if (isLoading) return (<div className="text-center mt-4">

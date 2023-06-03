@@ -111,7 +111,9 @@ const UserState = (props) => {
         if (user._id) {
             getAccount();
         }
-    }, [user, transactions]);
+    }, [
+        user,
+         transactions]);
 
     useEffect(() => {
         if (account._id) {

@@ -1,10 +1,9 @@
 import React from 'react'
+import AboutPageDescription from '../../components/about/AboutPageDescription'
 
 const About = () => {
   return (
-    <div><div className='container'>
-    <h3 className='mt-3'>This is about page. </h3>            
-</div></div>
+    <AboutPageDescription/>
   )
 }
 
