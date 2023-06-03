@@ -1,13 +1,13 @@
 import React from 'react'
+import HomePageContent from '../../components/home/HomePageContent'
 
 const Home = () => {
+  
   return (
-    <div>      
-        <div className='container'>
-            <h3 className='mt-3'>Wellcome to the Nexus Bank </h3>            
-        </div>
+    <div>
+      <HomePageContent />
     </div>
   )
 }
 
-export default Home;
+export default Home
