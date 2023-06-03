@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios';
 import { AuthContext } from "../context/auth" 
 import { AlertContext } from "../context/alert" 
@@ -23,8 +23,9 @@ const Login = () => {
             const response = await axios.post('http://localhost:3002/api/auth/login', user);
             const authToken = response.data.authToken;
             setIsLoading(false);
-            showAlert('Successfully logged in')
+            showAlert('Successfully logged in');
             authTokenStore(authToken); 
+
         } catch (error) {
             setIsLoading(false)
             setIsError(true)

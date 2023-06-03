@@ -13,7 +13,7 @@ const UserState = (props) => {
     const [isError, setIsError] = useState(false);
 
     const context = useContext(AlertContext)
-    const {showAlert} = context;
+    const { showAlert } = context;
 
     let navigate = useNavigate();
 
@@ -24,8 +24,7 @@ const UserState = (props) => {
             if (!authToken) {
                 navigate('/login');
                 // Display a message indicating the user is not logged in
-                console.log('You are not logged in! Please, Login before use.'); 
-                showAlert("You are not logged in! Please, Login before use")              
+                showAlert("You are not logged in! Please, Login before use")
             } else {
                 setIsLoading(true);
                 const response = await axios.get("http://localhost:3002/api/auth/getuser", {
@@ -36,18 +35,18 @@ const UserState = (props) => {
                 });
                 const user = await response.data.user;
                 setUser(user);
-                console.log("user",user)
+                // console.log("user", user)
                 setIsLoading(false);
             }
         } catch (error) {
             setIsLoading(false);
             console.log(error);
             if (error.request.status === 404) {
-                console.error("Not Found!");
-                alert("Not Found!");
+                console.error("User not Found!");
+                showAlert("User not Found!")
             } else if (error.request.status === 401) {
                 console.log("Please! Login before use.")
-                // alert("Please! Login before use.")
+                showAlert("Please! Login before use.")
             } else {
                 setIsError(true);
             }
@@ -66,8 +65,8 @@ const UserState = (props) => {
             setIsLoading(false);
             console.error(error.response);
             if (error.response.status === 404) {
-                console.log("Not Found!");
-                alert("Not Found!");
+                console.log("Account not Found!");
+                showAlert("Account not Found")
             } else {
                 setIsError(true);
             }
@@ -78,13 +77,15 @@ const UserState = (props) => {
     const getAllTransactions = async () => {
         // const id = "645b9d022d7596d3d17ab579";
         const id = account._id;
-        console.log("account ID:", id)
+        // console.log("account ID:", id)
 
         try {
             setIsLoading(true);
-            const res = await axios.get(`http://localhost:3002/api/transactions/account/${id}`);
-            const data = await res.data.transactions;
-            setTransactions(prevTransactions => [...prevTransactions, ...data]);
+            const response = await axios.get(`http://localhost:3002/api/transactions/account/${id}`);
+            if (response.status === 200) {
+                const data = await response.data.transactions;
+                setTransactions(prevTransactions => [...prevTransactions, ...data]);
+            }
             // setTransactions([...transactions, data]);
             setIsLoading(false)
 
@@ -92,12 +93,8 @@ const UserState = (props) => {
             setIsLoading(false);
             console.log(error);
             if (error.request.status === 404) {
-                console.error("Not Found!");
-                alert("Not Found!");
-            } else if (error.request.status === 401) {
-                console.log("Please! Login before use.")
-                alert("Please! Login before use.")
-                // navigate("/"); 
+                console.log("Transaction not Found!");
+                showAlert("Transaction not Found")
             } else {
                 setIsError(true);
             }
@@ -113,7 +110,7 @@ const UserState = (props) => {
         }
     }, [
         user,
-         transactions]);
+        transactions]);
 
     useEffect(() => {
         if (account._id) {

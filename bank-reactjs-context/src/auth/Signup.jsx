@@ -1,17 +1,23 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 import { AuthContext } from "../context/auth"
+import { AlertContext } from "../context/alert"
+import { UserContext } from "../context/user"
 
 
 const Signup = () => {
 
-    const [newUser, setNewUser] = useState({});    
-    const [confirmPassword, setConfirmPassword] = useState(); 
+    const [newUser, setNewUser] = useState({});
+    const [confirmPassword, setConfirmPassword] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const context = useContext(AuthContext);
-    const { authTokenStore } = context;
+    const authContext = useContext(AuthContext);
+    const { authTokenStore, } = authContext;
+    const alertContext = useContext(AlertContext);
+    const { showAlert } = alertContext;
+    const usertContext = useContext(UserContext);
+    const { getUser } = usertContext;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,8 +26,17 @@ const Signup = () => {
             const response = await axios.post('http://localhost:3002/api/auth/signup', newUser);
             const authToken = response.data.authToken;
             setIsLoading(false);
-            alert('Account created successfully')
+            showAlert('Account created successfully');
             authTokenStore(authToken);
+            const userId = response.data.user._id;
+            const response1 = await axios.post('http://localhost:3002/api/accounts/',
+                {
+                    user: userId
+                }
+            );
+            console.log(response1)
+            getUser();
+            console.log(response.data)
         } catch (error) {
             setIsLoading(false)
             setIsError(true)
@@ -31,7 +46,7 @@ const Signup = () => {
 
     const handleChange = (e) => {
         setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    };  
+    };
 
 
     if (isLoading) return (<div className="text-center mt-4">
@@ -63,7 +78,7 @@ const Signup = () => {
                         <input type="password" className="form-control my-3" id="password" name="password" placeholder='Password' onChange={handleChange} />
                     </div>
                     <div>
-                        <input type="password" className={`form-control my-3 ${newUser.password === confirmPassword ? '' : 'is-invalid'}` } id="confirmPassword"  name="confirmPassword" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <input type="password" className={`form-control my-3 ${newUser.password === confirmPassword ? '' : 'is-invalid'}`} id="confirmPassword" name="confirmPassword" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
                     </div>
                     <div>
                         <button type="submit" className="btn btn-primary my-2 w-100">Signup</button>

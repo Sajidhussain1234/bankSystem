@@ -12,7 +12,7 @@ const context = useContext(AlertContext);
   
   const handleLogout = () => {
     localStorage.removeItem('token');
-    showAlert("Logged out")
+    showAlert("Logged out successfully")
     navigate("/login");
   }
 

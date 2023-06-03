@@ -1,30 +1,39 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from "../../context/user"
 import axios from 'axios'
 
 
 
-const User = () => {
+const UserInfo = () => {
 
     const [file, setFile] = useState(null);
+    const [image, setImage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(false);
+
 
     const context = useContext(UserContext);
     const { user, getUser } = context;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log(file)
         if (file) {
             const formData = new FormData();
             formData.append('image', file);
             // const formDataObject = Object.fromEntries(formData.entries());
             // console.log(formDataObject);
             try {
+                setIsLoading(true);
                 await axios.put(`http://localhost:3002/api/users/${user._id}`, formData);
+                setIsLoading(false);
                 // When new image uploaded again call getUser() function to update image.
-                getUser();
+                getUser(); 
+                // Clear the input field
+                setImage('');
             } catch (error) {
-                console.log(error)
+                setIsLoading(false)
+                setIsError(true)
+                console.error(error);
             }
         };
     }
@@ -34,6 +43,9 @@ const User = () => {
         setFile(selectedFile);
     };
 
+
+
+
     return (
         <>
             {
@@ -41,13 +53,12 @@ const User = () => {
                 <img src={`http://localhost:3002/public/users/images/${user.image}`} className="rounded-circle img-fluid  mx-auto d-block shadow-4" style={{ width: "200px", height: "200px" }}
                     alt="Avatar" />
             }
-
             <div className="container">
                 <div className="container my-3 col-md-3">
                     <div className="mb-2">
                         <form onSubmit={handleSubmit}>
                             <strong> <label htmlFor="image" className="form-label"> {user.image ? "Edit" : "Upload"} picture</label> </strong>
-                            <input className="form-control" type="file" id="image" name="image" onChange={handleFileChange} />
+                            <input className="form-control" type="file" id="image" name="image" value={image} onChange={handleFileChange} />
                             <button type="submit" className="btn btn-primary my-2 w-100">Upload</button>
                         </form>
                     </div>
@@ -71,4 +82,4 @@ const User = () => {
 
 }
 
-export default User;
+export default UserInfo;

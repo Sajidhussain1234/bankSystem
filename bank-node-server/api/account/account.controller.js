@@ -1,8 +1,23 @@
 const Account = require("./account.model");
 
+
+let accountCounter = 0; // Counter variable to keep track of the account number
+
+// Function to generate the next account number
+function generateAccountNumber() {
+  accountCounter++; // Increment the counter
+  return accountCounter.toString().padStart(3, '0'); // Pad the number with leading zeros
+}
+
 // Create a new account
 const createAccount = async (req, res) => {
-  const { user,accountNumber, balance } = req.body;
+  // const { user,accountNumber, balance } = req.body; // For thunder client parameters
+
+  const {user} = req.body; 
+  console.log(user)
+  const accountNumber = generateAccountNumber(); 
+  const balance = 0; 
+
   try {
     const account = new Account({ user, accountNumber, balance });
     const newAccount = await account.save();

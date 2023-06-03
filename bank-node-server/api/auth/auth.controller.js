@@ -43,7 +43,7 @@ const signup = async (req, res) => {
        // user: { id: user._id},
     };
     const authToken = jwt.sign(payload, JWT_SECRET);
-    res.json({ message: "Congrats! Account created successfully", authToken });
+    res.json({ message: "Congrats! Account created successfully", user,  authToken });
   } catch (error) {
     res.status(500).send(error);
   }
