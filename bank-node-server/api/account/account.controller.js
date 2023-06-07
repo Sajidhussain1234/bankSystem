@@ -1,13 +1,21 @@
 const Account = require("./account.model");
 
 
-let accountCounter = 0; // Counter variable to keep track of the account number
 
-// Function to generate the next account number
-function generateAccountNumber() {
-  accountCounter++; // Increment the counter
-  return accountCounter.toString().padStart(3, '0'); // Pad the number with leading zeros
-}
+
+// This is a simple function used to assign account number to a new user
+const initializeAccountNumber = async () => {
+  const account = await Account.findOne().sort({ accountNumber: -1 });
+  if (account) {
+    // Increment the account number
+    return (account.accountNumber + 1)
+  } else {
+    // Set the initial account number
+    return 1000; 
+  }
+};
+
+
 
 // Create a new account
 const createAccount = async (req, res) => {
@@ -15,7 +23,7 @@ const createAccount = async (req, res) => {
 
   const {user} = req.body; 
   console.log(user)
-  const accountNumber = generateAccountNumber(); 
+  const accountNumber = await initializeAccountNumber(); 
   const balance = 0; 
 
   try {

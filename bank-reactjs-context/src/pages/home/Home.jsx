@@ -1,13 +1,18 @@
 import React from 'react'
-import HomePageContent from '../../components/home/HomePageContent'
+import HomePageCrousel from '../../components/home/HomePageCrousel'
+import BankingOnGo from '../../components/home/BankingOnGo'
+import FinancialPlanning from '../../components/home/FinancialPlanning'
 
 const Home = () => {
   
   return (
     <div>
-      <HomePageContent />
+      <HomePageCrousel />
+      <BankingOnGo />
+      <FinancialPlanning />
+      
     </div>
   )
 }
 
-export default Home
+export default Home; 

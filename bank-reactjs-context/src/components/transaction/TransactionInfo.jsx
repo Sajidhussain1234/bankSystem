@@ -10,11 +10,11 @@ const TransactionInfo = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const context = useContext(UserContext);
-    const context1 = useContext(AlertContext)
+    const userContext = useContext(UserContext);
+    const alertContext = useContext(AlertContext)
 
-    const { transactions, setTransactions, account } = context;
-    const {showAlert} = context1;
+    const { transactions, setTransactions, account } = userContext;
+    const {showAlert} = alertContext;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -31,7 +31,8 @@ const TransactionInfo = () => {
             showAlert("Transaction done successfully! ")
         } catch (error) {
             setIsLoading(false)
-            setIsError(true)
+            showAlert(error.response.data.error);
+            // setIsError(true)
             console.error(error);
         }
     };
@@ -65,7 +66,7 @@ const TransactionInfo = () => {
             </div>
             <hr />
             {/* Showing all transactions */}
-            <div className='container'>
+            <div className='container mb-3'>
                 <h3> Transactions history: </h3>
                 <div className="row row-cols-1 row-cols-md-4 g-6 my-2">
                     {

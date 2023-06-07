@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { AlertContext } from "../context/alert";
+import { AlertContext } from "./alert";
 
 const UserContext = createContext();
 
@@ -12,16 +12,19 @@ const UserState = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const context = useContext(AlertContext)
-    const { showAlert } = context;
+    const alertContext = useContext(AlertContext)
+    const { showAlert } = alertContext;
 
     let navigate = useNavigate();
 
+
     const getUser = async () => {
-        const authToken = localStorage.getItem('token');
+
+        const authToken = localStorage.getItem('token');        
 
         try {
-            if (!authToken) {
+            if (!localStorage.getItem('token')) {
+                console.log("testing")
                 navigate('/login');
                 // Display a message indicating the user is not logged in
                 showAlert("You are not logged in! Please, Login before use")
@@ -85,16 +88,15 @@ const UserState = (props) => {
             if (response.status === 200) {
                 const data = await response.data.transactions;
                 setTransactions(prevTransactions => [...prevTransactions, ...data]);
-            }
-            // setTransactions([...transactions, data]);
+            }            
             setIsLoading(false)
 
         } catch (error) {
             setIsLoading(false);
             console.log(error);
             if (error.request.status === 404) {
+                setTransactions([]); 
                 console.log("Transaction not Found!");
-                showAlert("Transaction not Found")
             } else {
                 setIsError(true);
             }

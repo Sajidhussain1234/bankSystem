@@ -12,21 +12,21 @@ const Routing = () => {
     return (
         <div>
             <Routes>
-                <Route exact path="/" element={<Home key="home" />} />
-                <Route exact path="/user" element={<User key="user" />} />
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/user" element={<User />} />
                 <Route
                     exact
                     path="/account"
-                    element={<Account key="account" />}
+                    element={<Account />}
                 />
                 <Route
                     exact
                     path="/transaction"
                     element={<Transaction key="transaction" />}
                 />
-                <Route exact path="/about" element={<About key="about" />} />
-                <Route exact path="/login" element={<Login key="login" />} />
-                <Route exact path="/signup" element={<Signup key="signup" />} />
+                <Route exact path="/about" element={<About />} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/signup" element={<Signup />} />
             </Routes>
         </div>
     )

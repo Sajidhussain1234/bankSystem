@@ -5,6 +5,7 @@ import { AlertState } from "../context/alert";
 import Navbar from '../components/common/Navbar';
 import Alert from '../components/Alert';
 import Routing from '../routing/Routing';
+import Footer from '../components/common/Footer';
 
 
 const Layout = () => {
@@ -16,6 +17,7 @@ const Layout = () => {
             <Navbar />
             <Alert />
             <Routing />
+            <Footer />
           </UserState>
         </AuthState>
       </AlertState>

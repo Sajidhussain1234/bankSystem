@@ -2,18 +2,23 @@ import React, {useContext} from 'react'
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AlertContext } from "../../context/alert";
+import { AuthContext } from "../../context/auth";
 
 const Navbar = () => {
 
-const context = useContext(AlertContext);
+const alertContext = useContext(AlertContext);
+const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { showAlert } = context;
+  const { showAlert } = alertContext;
+  const { setIsLoggedIn } = authContext;
+
   
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('token');   
     showAlert("Logged out successfully")
     navigate("/login");
+    setIsLoggedIn(false); 
   }
 
   return (
@@ -28,7 +33,7 @@ const context = useContext(AlertContext);
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">Home</Link>
             </li>
-            {localStorage.getItem('token') ?
+            {(localStorage.getItem('token')) ?
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/user">User</Link>

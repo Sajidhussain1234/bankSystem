@@ -31,8 +31,8 @@ const schema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required field"],
       validate(value) {
-        if (!validator.isLength(value, { min: 6, max: 1000 })) {
-          throw new Error("length of the password should be between 6-1000");
+        if (!validator.isLength(value, { min: 6 , max: 100 })) {
+          throw new Error("length of the password should be between 6-100");
         }
         if (value.toLowerCase().includes("password")) {
           throw new Error(

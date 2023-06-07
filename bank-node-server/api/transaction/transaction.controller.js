@@ -1,6 +1,8 @@
 const Transaction = require("./transaction.model");
 const Account = require("../account/account.model");
 
+
+// Create a new transaction
 const createTransaction = async (req, res) => {
   console.log(req.body);
   const { account, amount, transactionType } = req.body;
@@ -50,6 +52,7 @@ const createTransaction = async (req, res) => {
   }
 };
 
+// Get a specific transaction by transaction id
 const getTransactionById = async (req, res) => {
   const id = req.params.id;
   console.log(id)
@@ -68,6 +71,7 @@ const getTransactionById = async (req, res) => {
   }
 };
 
+// Get all transactions of a specific account
 const getTransactionByAccountId = async (req, res) => {
   const account = req.params.id;
   console.log(account);

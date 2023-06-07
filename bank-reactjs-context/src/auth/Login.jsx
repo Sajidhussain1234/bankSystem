@@ -23,12 +23,12 @@ const Login = () => {
             const response = await axios.post('http://localhost:3002/api/auth/login', user);
             const authToken = response.data.authToken;
             setIsLoading(false);
-            showAlert('Successfully logged in');
+            showAlert('Successfully logged in');           
             authTokenStore(authToken); 
-
         } catch (error) {
             setIsLoading(false)
-            setIsError(true)
+            showAlert(error.response.data.error);
+            // setIsError(true)
             console.error(error);
         }
     };

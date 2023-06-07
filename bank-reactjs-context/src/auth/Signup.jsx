@@ -8,6 +8,7 @@ import { UserContext } from "../context/user"
 const Signup = () => {
 
     const [newUser, setNewUser] = useState({});
+    const [passwordError, setPasswordError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -33,13 +34,12 @@ const Signup = () => {
                 {
                     user: userId
                 }
-            );
-            console.log(response1)
-            getUser();
-            console.log(response.data)
+            );          
+            getUser();          
         } catch (error) {
             setIsLoading(false)
-            setIsError(true)
+            showAlert(error.response.data.error);
+            // setIsError(true)
             console.error(error);
         }
     };
@@ -47,6 +47,18 @@ const Signup = () => {
     const handleChange = (e) => {
         setNewUser({ ...newUser, [e.target.name]: e.target.value });
     };
+
+    const handlePasswordChange = (e) => {
+        const value = e.target.value;
+
+        if (value.length < 6) {
+          setPasswordError('Password must be at least 6 characters.');
+        } else {
+          setPasswordError('');
+          setNewUser({ ...newUser, [e.target.name]: e.target.value });
+
+        }
+      };
 
 
     if (isLoading) return (<div className="text-center mt-4">
@@ -74,11 +86,21 @@ const Signup = () => {
                     <div>
                         <input type="number" className="form-control my-3" id="mobileNumber" name="mobileNumber" placeholder='Mobile Number' onChange={handleChange} />
                     </div>
-                    <div>
-                        <input type="password" className="form-control my-3" id="password" name="password" placeholder='Password' onChange={handleChange} />
+                   
+                    <div className="mb-3">
+                        <input
+                            type="password"
+                            className={`form-control ${passwordError ? 'is-invalid' : ''}`}
+                            id="password"
+                            name="password"
+                            placeholder='Password'
+                           
+                            onChange={handlePasswordChange}
+                        />
+                        {passwordError && <div className="invalid-feedback">{passwordError}</div>}
                     </div>
                     <div>
-                        <input type="password" className={`form-control my-3 ${newUser.password === confirmPassword ? '' : 'is-invalid'}`} id="confirmPassword" name="confirmPassword" placeholder='Confirm Password' onChange={(e) => setConfirmPassword(e.target.value)} />
+                        <input type="password" className={`form-control my-3 ${newUser.password == confirmPassword ? '' : 'is-invalid'}`} id="confirmPassword" name="confirmPassword" placeholder='Confirm Password'  onChange={(e) => setConfirmPassword(e.target.value)} />
                     </div>
                     <div>
                         <button type="submit" className="btn btn-primary my-2 w-100">Signup</button>

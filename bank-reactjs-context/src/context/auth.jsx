@@ -1,9 +1,10 @@
-import React, { createContext } from "react";
+import React, {useState, createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 const AuthState = (props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
 
   let navigate = useNavigate();
@@ -12,14 +13,13 @@ const AuthState = (props) => {
   const authTokenStore = (authToken) => {
     console.log(authToken);
     localStorage.setItem('token', authToken);
-    navigate("/");   
+    navigate("/");      
+    setIsLoggedIn(true) 
   };
 
-
-
-
+  
   return (
-    <AuthContext.Provider value={{ authTokenStore }}>
+    <AuthContext.Provider value={{ authTokenStore, isLoggedIn, setIsLoggedIn }}>
       {props.children}
     </AuthContext.Provider>
   );
